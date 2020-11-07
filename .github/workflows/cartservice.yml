@@ -3,13 +3,23 @@ name: Deploy Cart Service
 on:
   push:
     branches: [ master ]
+    paths:
+    - src/cartservice/**
   pull_request:
     branches: [ master ]
+    paths:
+    - src/cartservice/**
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: src/cartservice
 
     steps:
     - uses: actions/checkout@v2
