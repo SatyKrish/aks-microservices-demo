@@ -48,6 +48,8 @@ on:
   push:
     branches:
     - master
+    paths:
+    - templates/**
   pull_request:
 
 jobs:
