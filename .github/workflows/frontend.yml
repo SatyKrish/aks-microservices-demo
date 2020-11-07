@@ -4,11 +4,11 @@ on:
   push:
     branches: [ master ]
     paths:
-    - src/checkoutservice/**
+    - src/frontend/**
   pull_request:
     branches: [ master ]
     paths:
-    - src/checkoutservice/**
+    - src/frontend/**
 
 jobs:
 
@@ -20,7 +20,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: src/checkoutservice
+        working-directory: src/frontend
         
     steps:
     - name: Set up Go 1.x
