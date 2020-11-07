@@ -1,4 +1,4 @@
-name: Deploy Checkout Service
+name: Deploy Shipping Service
 
 on:
   push:
