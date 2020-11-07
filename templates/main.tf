@@ -60,8 +60,8 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
     vm_size             = "Standard_DS2_v2"
     type                = "VirtualMachineScaleSets"
     enable_auto_scaling = true
-    max_count           = 3
     min_count           = 1
+    max_count           = 3
     availability_zones  = [1, 2, 3]
   }
 
@@ -105,8 +105,30 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
       log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s_monitor.id
     }
   }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
+  name                  = "dev"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s_cluster.id
+  vm_size               = "Standard_DS2_v2"
+  mode                  = "User"
+  enable_auto_scaling   = true
+  min_count             = 1
+  max_count             = 3
+  availability_zones    = [1, 2, 3]
+  priority              = "Spot"
+  eviction_policy       = "Delete"
+  spot_max_price        = -1
+
+  node_labels = {
+    "kubernetes.azure.com/scalesetpriority" = "spot"
+  }
+
+  node_taints = [
+    "kubernetes.azure.com/scalesetpriority=spot:NoSchedule"
+  ]
 
   tags = {
-    environment = var.environment
+    Environment = "Dev"
   }
 }
