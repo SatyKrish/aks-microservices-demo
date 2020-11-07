@@ -28,7 +28,7 @@ provider "azurerm" {
 }
 
 locals {
-  aks_cluster_name    = "${var.prefix}-k8s"
+  aks_cluster_name = "${var.prefix}-k8s"
 }
 
 resource "azurerm_resource_group" "k8s_rg" {
@@ -56,17 +56,17 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
   dns_prefix          = local.aks_cluster_name
 
   default_node_pool {
-    name                  = "system"
-    vm_size               = "Standard_DS2_v2"
-    type                  = "VirtualMachineScaleSets"
-    enable_auto_scaling   = true
-    max_count             = 3
-    min_count             = 1
-    availability_zones    = [1,2,3]
+    name                = "system"
+    vm_size             = "Standard_DS2_v2"
+    type                = "VirtualMachineScaleSets"
+    enable_auto_scaling = true
+    max_count           = 3
+    min_count           = 1
+    availability_zones  = [1, 2, 3]
   }
 
   network_profile {
-    network_plugin = "kubenet"
+    network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
 
@@ -101,7 +101,7 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
     }
 
     oms_agent {
-      enabled = true
+      enabled                    = true
       log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s_monitor.id
     }
   }
