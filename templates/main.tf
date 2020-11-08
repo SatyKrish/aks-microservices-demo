@@ -122,19 +122,19 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   mode                  = "User"
   enable_auto_scaling   = true
   min_count             = 1
-  max_count             = 3
+  max_count             = 10
   availability_zones    = [1, 2, 3]
-  priority              = "Spot"
+  # priority              = "Spot"
   eviction_policy       = "Delete"
   spot_max_price        = 0.5
 
-  node_labels = {
-    "kubernetes.azure.com/scalesetpriority" = "spot"
-  }
+  # node_labels = {
+  #   "kubernetes.azure.com/scalesetpriority" = "spot"
+  # }
 
-  node_taints = [
-    "kubernetes.azure.com/scalesetpriority=spot:NoSchedule"
-  ]
+  # node_taints = [
+  #   "kubernetes.azure.com/scalesetpriority=spot:NoSchedule"
+  # ]
 
   tags = {
     Environment = "Dev"
