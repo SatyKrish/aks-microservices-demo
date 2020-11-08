@@ -118,7 +118,7 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
 resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   name                  = "dev"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s_cluster.id
-  vm_size               = "Standard_B2ms"
+  vm_size               = "Standard_D2s_v4"
   mode                  = "User"
   enable_auto_scaling   = true
   min_count             = 1
@@ -126,7 +126,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   availability_zones    = [1, 2, 3]
   priority              = "Spot"
   eviction_policy       = "Delete"
-  spot_max_price        = -1
+  spot_max_price        = 0.5
 
   node_labels = {
     "kubernetes.azure.com/scalesetpriority" = "spot"
