@@ -7,6 +7,7 @@ on:
       - master
     paths:
     - src/shippingservice/**
+    - .github/workflows/shippingservice.yml
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -16,6 +17,7 @@ on:
   pull_request:
     paths:
     - src/shippingservice/**
+    - .github/workflows/shippingservice.yml
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
