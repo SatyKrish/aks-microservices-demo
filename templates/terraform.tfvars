@@ -1,2 +1,2 @@
-prefix      = "demo"
-location    = "Southeast Asia"
+prefix   = "demo"
+location = "Southeast Asia"
