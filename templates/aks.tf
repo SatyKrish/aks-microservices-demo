@@ -88,8 +88,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   availability_zones    = [1, 2, 3]
 
   node_taints = [
-    "environment=dev:NoSchedule",
-    "environment=test:NoSchedule"
+    "environment=devtest:NoSchedule"
   ]
 
   tags = {
