@@ -20,6 +20,14 @@ terraform {
       version = "~> 3.0"
     }
   }
+
+  # Store terraform state with Azure Storage as backend
+  backend "azurerm" {
+    resource_group_name  = "saty-terraform-rg"
+    storage_account_name = "satyterraformbackend"
+    container_name       = "terraform-state"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -57,7 +65,7 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
 
   default_node_pool {
     name                = "system"
-    vm_size             = "Standard_DS2_v2"
+    vm_size             = "Standard_DS2_v3"
     type                = "VirtualMachineScaleSets"
     enable_auto_scaling = true
     min_count           = 1
@@ -110,7 +118,7 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
 resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   name                  = "dev"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s_cluster.id
-  vm_size               = "Standard_DS2_v2"
+  vm_size               = "Standard_B2ms"
   mode                  = "User"
   enable_auto_scaling   = true
   min_count             = 1
