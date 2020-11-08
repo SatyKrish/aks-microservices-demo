@@ -92,10 +92,6 @@ jobs:
         id: init
         run: terraform init
 
-      # Reconcile the state for Terraform
-      - name: Terraform Refresh
-        run: terraform refresh
-
       # Generates an execution plan for Terraform
       - name: Terraform Plan
         id: plan
