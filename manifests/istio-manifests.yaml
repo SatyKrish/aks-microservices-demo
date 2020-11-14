@@ -53,7 +53,7 @@ metadata:
   name: frontend
 spec:
   hosts:
-  - "frontend.default.svc.cluster.local"
+  - "frontend.demo.svc.cluster.local"
   http:
   - route:
     - destination:
