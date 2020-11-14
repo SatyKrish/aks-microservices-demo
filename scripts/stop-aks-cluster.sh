@@ -10,45 +10,48 @@ if [[ -z "$CLUSTER" || -z "$RESOURCE_GROUP" ]]; then
 	exit 1
 fi
 
-# List nodepools in AKS cluster
-NODEPOOLS=$(az aks nodepool list \
-    --resource-group $RESOURCE_GROUP \
-    --cluster-name $CLUSTER \
-    --query '[].name' -o tsv)
-
-for NODEPOOL in $NODEPOOLS
-do
-    AUTOSCALING_ENABLED=$(az aks nodepool show \
-        --resource-group  $RESOURCE_GROUP \
+disable_autoscaler()
+{
+    # List nodepools in AKS cluster
+    NODEPOOLS=$(az aks nodepool list \
+        --resource-group $RESOURCE_GROUP \
         --cluster-name $CLUSTER \
-        --name $NODEPOOL \
-        --query "enableAutoScaling")
+        --query '[].name' -o tsv)
 
-    if ( $AUTOSCALING_ENABLED ); then
-        # Disable cluster autoscaler (CA) in system nodepool
-        az aks nodepool update \
-            --resource-group $RESOURCE_GROUP \
-            --cluster-name $AKS_CLUSTER \
+    for NODEPOOL in $NODEPOOLS
+    do
+        AUTOSCALING_ENABLED=$(az aks nodepool show \
+            --resource-group  $RESOURCE_GROUP \
+            --cluster-name $CLUSTER \
             --name $NODEPOOL \
-            --disable-cluster-autoscaler
+            --query "enableAutoScaling")
 
-        log "Successfully disabled Cluster Autoscaler for AKS nodepool - $NODEPOOL."
-    else
-        log "Cluster Autoscaler for AKS nodepool - $NODEPOOL is in disabled state."
-    fi
-done
+        if ( $AUTOSCALING_ENABLED ); then
+            # Disable cluster autoscaler (CA) in system nodepool
+            az aks nodepool update \
+                --resource-group $RESOURCE_GROUP \
+                --cluster-name $CLUSTER \
+                --name $NODEPOOL \
+                --disable-cluster-autoscaler
 
+            log "Successfully disabled Cluster Autoscaler for AKS nodepool - $NODEPOOL."
+        else
+            log "Cluster Autoscaler for AKS nodepool - $NODEPOOL is already disabled."
+        fi
+    done
+}
 
 POWERSTATE=$(az aks show \
-	--resource-group "$RESOURCE_GROUP" \
-	--name "$CLUSTER" \
-	--query "powerState.code" -o tsv)
+	--resource-group $RESOURCE_GROUP \
+	--name $CLUSTER \
+	--query 'powerState.code' -o tsv)
 
-if [[ "$POWERSTATE" -eq "Running" ]]; then
+if [[ "$POWERSTATE" == "Running" ]]; then
+    disable_autoscaler
+
 	az aks stop \
 		--resource-group "$RESOURCE_GROUP" \
 		--name "$CLUSTER" \
-		--no-wait
 
     log "Successfully stopped AKS cluster '$CLUSTER'."
 else
