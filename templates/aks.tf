@@ -16,8 +16,8 @@ resource "azurerm_log_analytics_workspace" "k8s_monitor" {
 }
 
 resource "azurerm_user_assigned_identity" "k8s_uami" {
-  resource_group_name = azurerm_resource_group.k8s_rg.location
-  location            = azurerm_resource_group.k8s_rg.name
+  resource_group_name = azurerm_resource_group.k8s_rg.name
+  location            = azurerm_resource_group.k8s_rg.location
 
   name = "${local.aks_cluster_name}-uami"
 }
