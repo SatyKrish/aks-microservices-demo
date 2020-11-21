@@ -1,14 +1,15 @@
 #!/bin/bash
 
-set -euo pipefail
 log() { echo "$1" >&2; }
 
 RESOURCE_GROUP="$1"
 CLUSTER="$2"
 if [[ -z "$CLUSTER" || -z "$RESOURCE_GROUP" ]]; then
-	echo "stop-aks-cluster.sh <resource_group> <cluster>"
+	log "stop-aks-cluster.sh <resource_group> <cluster>"
 	exit 1
 fi
+
+set -euo pipefail
 
 enable_autoscaler()
 {

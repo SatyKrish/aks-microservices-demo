@@ -15,6 +15,13 @@ resource "azurerm_log_analytics_workspace" "k8s_monitor" {
   retention_in_days   = 30
 }
 
+resource "azurerm_user_assigned_identity" "k8s_uami" {
+  resource_group_name = azurerm_resource_group.k8s_rg.location
+  location            = azurerm_resource_group.k8s_rg.name
+
+  name = "${local.aks_cluster_name}-uami"
+}
+
 resource "azuread_group" "k8s_administrators" {
   name        = "${local.aks_cluster_name}-administrators"
   description = "Kubernetes administrators for the ${local.aks_cluster_name} cluster."
