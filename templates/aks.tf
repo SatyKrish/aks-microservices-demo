@@ -94,10 +94,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_nodepool_dev" {
   max_count             = 10
   availability_zones    = [1, 2, 3]
 
-  node_taints = [
-    "environment=devtest:NoSchedule"
-  ]
-
   tags = {
     environment = "devtest"
   }
