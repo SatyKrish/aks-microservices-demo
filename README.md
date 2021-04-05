@@ -1,4 +1,3 @@
-![AKS Cluster](https://github.com/SatyKrish/aks-microservices-demo/workflows/AKS%20Cluster/badge.svg)
 ![Ad Service](https://github.com/SatyKrish/aks-microservices-demo/workflows/Ad%20Service/badge.svg)
 ![Cart Service](https://github.com/SatyKrish/aks-microservices-demo/workflows/Cart%20Service/badge.svg)
 ![Checkout Service](https://github.com/SatyKrish/aks-microservices-demo/workflows/Checkout%20Service/badge.svg)
