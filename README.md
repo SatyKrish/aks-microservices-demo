@@ -10,7 +10,10 @@
 ![Recommendation Service](https://github.com/SatyKrish/aks-microservices-demo/workflows/Recommendation%20Service/badge.svg)
 ![Shipping Service](https://github.com/SatyKrish/aks-microservices-demo/workflows/Shipping%20Service/badge.svg)
 
-# aks-microservices-demo
+# AKS Microservices Demo (WIP)
 Demonstrate best practices for implementing microservices on Azure Kubernetes Service (AKS)
 
 ![microservices-architecture](./docs/img/architecture-diagram.png)
+
+# Reference
+[GoogleCloudPlatform/microservices-demo(https://github.com/GoogleCloudPlatform/microservices-demo)
